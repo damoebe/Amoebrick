@@ -1,0 +1,1 @@
+typeSearchIndex = [{"l":"Alle Klassen und Schnittstellen","u":"allclasses-index.html"},{"p":"me.damoebe","l":"Brick"},{"p":"me.damoebe","l":"BrickColor"},{"p":"me.damoebe","l":"BrickImage"},{"p":"me.damoebe","l":"Main"}];updateSearchResults();
