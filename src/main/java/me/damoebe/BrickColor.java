@@ -82,7 +82,7 @@ public class BrickColor {
      * @param rgb The rgb value used to find the real BrickColor
      * @return A BrickColor Object which is nearest to the rgb parm
      */
-    public static BrickColor getNearestColor(int rgb){
+    public static BrickColor getNearestColor(int rgb, List<BrickColor> brickColors){
         Color targetColor = new Color(rgb);
         if (brickColors.isEmpty()){
             loadColors();

@@ -18,13 +18,21 @@ public class Brick {
     private final BrickColor brick_color;
     private final int rgb;
 
+
+
     /**
      * Main constructor of the Brick-class
      * @param rgb The rgb value of the pixel-color
      */
     public Brick(int rgb) {
-        brick_color = BrickColor.getNearestColor(rgb);
-        element_id = getElementID();
+        brick_color = BrickColor.getNearestColor(rgb, BrickColor.brickColors);
+        element_id = getElementID(brick_color);
+        this.rgb = rgb;
+    }
+
+    public Brick(String element_id, int rgb){
+        this.element_id = element_id;
+        this.brick_color = getBrickColor(element_id);
         this.rgb = rgb;
     }
 
@@ -32,7 +40,7 @@ public class Brick {
      * Generates the element_id using the brick_color_id to search in elements.csv
      * @return element_id
      */
-    private String getElementID(){
+    private String getElementID(BrickColor brickColor){
         InputStream is = Thread.currentThread()
         .getContextClassLoader()
         .getResourceAsStream("elements.csv");
@@ -41,8 +49,7 @@ public class Brick {
             List<String[]> lines = csvReader.readAll();
             lines.removeFirst();
             for (String[] line : lines){
-                if (line[2].equalsIgnoreCase(String.valueOf(brick_color.getId())) && line[1].equalsIgnoreCase("3005")){
-                    System.out.println(line[0]);
+                if (line[2].equalsIgnoreCase(String.valueOf(brickColor.getId())) && line[1].equalsIgnoreCase("3005")){
                     return line[0];
                 }
             }
@@ -52,12 +59,39 @@ public class Brick {
         return null;
     }
 
+    private BrickColor getBrickColor(String element_id){
+        InputStream is = Thread.currentThread()
+        .getContextClassLoader()
+        .getResourceAsStream("elements.csv");
+        try (Reader reader = new InputStreamReader(is)) {
+            CSVReader csvReader = new CSVReader(reader);
+            List<String[]> lines = csvReader.readAll();
+            lines.removeFirst();
+            for (String[] line : lines){
+                if (line[0].equalsIgnoreCase(element_id)){
+                    int colorId = Integer.parseInt(line[2]);
+                    for (BrickColor brickColor : BrickColor.brickColors){
+                        if (brickColor.getId() == colorId){
+                            return brickColor;
+                        }
+                    }
+                }
+            }
+            return null;
+        } catch (IOException | CsvException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     /**
      * @return Color of the Brick
      */
     public Color getColor() {
         return brick_color.getColor();
+    }
 
+    public BrickColor getBrick_color(){
+        return brick_color;
     }
 
     /**
