@@ -5,7 +5,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>me.amoebemc</groupId>
-    <artifactId>Amoebrick</artifactId>
+    <artifactId>amoebrick</artifactId>
     <version>1.0</version>
 
     <properties>
@@ -21,5 +21,11 @@
             <version>5.9</version>
         </dependency>
     </dependencies>
-
+    <distributionManagement>
+       <repository>
+         <id>github</id>
+         <name>GitHub OWNER Apache Maven Packages</name>
+         <url>https://maven.pkg.github.com/damoebe/amoebrick</url>
+       </repository>
+    </distributionManagement>
 </project>
