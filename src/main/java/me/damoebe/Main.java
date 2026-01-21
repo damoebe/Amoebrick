@@ -9,16 +9,11 @@ public class Main {
     static BrickImage brickImage;
     public static void main(String[] args){
         // demo
-        brickImage = new BrickImage(48, 48, new ImageIcon("C:\\Users\\marti\\Downloads\\Stonetemplepilotscore.png").getImage());
-        test("before");
-        brickImage.optimizeVariations(5);
-        test("after");
+        brickImage = new BrickImage(48, 48, new ImageIcon(System.getProperty("user.home") + "\\Downloads\\Stonetemplepilotscore.png").getImage());
+        test("stp_core");
+
     }
 
-    /**
-     * Simple test Frame
-     * @param name name of the frame
-     */
     private static void test(String name){
         JFrame frame = new JFrame(name);
         frame.add(new JLabel(new ImageIcon(brickImage.getImage(10))));

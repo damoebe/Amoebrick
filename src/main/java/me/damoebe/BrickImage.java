@@ -44,9 +44,9 @@ public class BrickImage {
     /**
      * Draws a preview image
      * @param brickSize The exact pixel-size one brick will take in the image
-     * @return An image containing all bricks forming the result
+     * @return A BufferedImage containing all bricks forming the result
      */
-    public Image getImage(int brickSize){
+    public BufferedImage getImage(int brickSize){
         // build brick image
         BufferedImage image = new BufferedImage(width*brickSize, height*brickSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = image.createGraphics();
@@ -76,8 +76,7 @@ public class BrickImage {
         }
 
         graphics2D.dispose();
-
-        return new ImageIcon(image).getImage();
+        return image;
     }
 
     /**
