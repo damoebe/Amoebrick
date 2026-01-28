@@ -17,7 +17,7 @@ and this dependency:
 <dependency>
   <groupId>com.github.damoebe</groupId>
   <artifactId>Amoebrick</artifactId>
-  <version>v1.0</version>
+  <version>v1.1</version>
 </dependency>
 ```
 After that you can just refresh your Maven and everything should be setup. You can download the documentation from this page to get an overview of all classes and methods. 
@@ -54,7 +54,7 @@ System.out.println(brickImage.getStats());
 **Original** Stone Temple Pilots - Core Album Cover (great music btw):\
 ![Original image (Stone Temple Pilots - Core Album Cover)](/src/main/java/me/damoebe/example/Stonetemplepilotscore.png)\
 **Generated** BrickImage Preview (Output file of example):\
-![Generated Image .png](/src/main/java/me/damoebe/example/stp_core_brickimage.png)\
+![Generated Image .png](/src/main/java/me/damoebe/example/stp_core_brickimage.png)
 
 **Console Output:**
 ```
