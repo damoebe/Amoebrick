@@ -8,6 +8,10 @@ import java.util.Map;
  * Just a demo class
  */
 public class Main {
+    /**
+     * just a main method
+     * @param args
+     */
     public static void main(String[] args){
         // demo
         BrickImage brickImage1 = new BrickImage(48, 48, new ImageIcon(System.getProperty("user.home")
