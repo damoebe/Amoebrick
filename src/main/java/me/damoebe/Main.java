@@ -10,13 +10,15 @@ import java.util.Map;
 public class Main {
     public static void main(String[] args){
         // demo
-        BrickImage brickImage1 = new BrickImage(48, 48, new ImageIcon(System.getProperty("user.home") + "\\Downloads\\Stonetemplepilotspurple.png").getImage(), false);
+        BrickImage brickImage1 = new BrickImage(48, 48, new ImageIcon(System.getProperty("user.home")
+                + "\\Downloads\\Stonetemplepilotspurple.png").getImage(), false);
         test("first", brickImage1);
         Map<String, Integer> elements = new HashMap<>();
         elements.put("4169428", (48*48)/3);
         elements.put("6236772", (48*48)/3);
         elements.put("6514207", (48*48)/3);
-        BrickImage brickImage2 = new BrickImage(48, 48, new ImageIcon(System.getProperty("user.home") + "\\Downloads\\Stonetemplepilotspurple.png").getImage(), elements);
+        BrickImage brickImage2 = new BrickImage(48, 48, new ImageIcon(System.getProperty("user.home") +
+                "\\Downloads\\Stonetemplepilotspurple.png").getImage(), elements);
         test("second", brickImage2);
 
     }
