@@ -26,19 +26,101 @@ public class BrickImage {
      * @param image The source image, that will be scaled down
      */
     public BrickImage(int width, int height, Image image){
+        if (image == null) throw new RuntimeException("Image can't be null!");
+
         this.width = width;
         this.height = height;
 
-        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
-        Graphics2D graphics2D = resizedImage.createGraphics();
-        graphics2D.drawImage(image, 0, 0, width, height, null);
-        graphics2D.dispose();
+        BufferedImage resizedImage = getResizedImage(image, width, height);
 
         for (int y = 0; y != height; y++){
             for (int x = 0; x != width; x++){
                 bricks.add(new Brick(resizedImage.getRGB(x, y)));
             }
         }
+    }
+
+    /**
+     * Transparent property constructor
+     * @param width The target width of the BrickImage
+     * @param height The target height of the BrickImage
+     * @param image The source image, that will be scaled down
+     * @param allowTransparentBricks If transparent Bricks should be allowed or not
+     */
+    public BrickImage(int width, int height, Image image, boolean allowTransparentBricks){
+
+        this(width, height, image);
+
+        if (!allowTransparentBricks){
+
+            for(Brick brick : bricks){
+
+                if (brick.getBrick_color().isTransparent()){
+                    List<BrickColor> newBrickColors = new ArrayList<>(BrickColor.brickColors);
+                    newBrickColors.remove(brick.getBrick_color());
+                    brick.setBrick_color(BrickColor.getNearestColor(brick.getRgb(), newBrickColors));
+                }
+            }
+
+        }
+    }
+
+    /**
+     * Constructor for a BrickImage which has specific elements build in it.
+     * @param width Target width of the BrickImage
+     * @param height Target height of the BrickImage
+     * @param image Source Image
+     * @param availableElements Map of available elements that should be used to build the BrickImage
+     */
+    public BrickImage(int width, int height, Image image, Map<String, Integer> availableElements){
+        if (image == null) throw new RuntimeException("Image can't be null!");
+
+        this.width = width;
+        this.height = height;
+
+        BufferedImage resizedImage = getResizedImage(image, width, height);
+
+        List<BrickColor> availableColors = new ArrayList<>();
+
+        // count provided element amount
+        int availableBrickAmount = 0;
+        for (Map.Entry entry : availableElements.entrySet()){
+            availableBrickAmount += (Integer) entry.getValue();
+        }
+
+        if (getTotalBricks() > availableBrickAmount) throw new RuntimeException("There are not enough parts " +
+                "in availableElements to build a BrickImage!"); // if not enough parts
+
+        // inefficient: future me fix this
+        for (Map.Entry entry : availableElements.entrySet()){
+            for (int i = 0; i != (Integer) entry.getValue(); i++){
+                availableColors.add(new Brick((String) entry.getKey()).getBrick_color());
+            }
+        }
+
+        for (int y = 0; y != height; y++){
+            for (int x = 0; x != width; x++){
+                Brick brick = new Brick(resizedImage.getRGB(x, y), availableColors);
+                availableColors.remove(brick.getBrick_color());
+                bricks.add(brick);
+            }
+        }
+
+    }
+
+    /**
+     * Resizes an Image to a BufferedImage
+     * @param image Source Image
+     * @param width Target width
+     * @param height Target height
+     * @return BufferedImage
+     */
+    private BufferedImage getResizedImage(Image image, int width, int height){
+        BufferedImage resizedImage = new BufferedImage(width, height, BufferedImage.TYPE_INT_RGB);
+        Graphics2D graphics2D = resizedImage.createGraphics();
+        graphics2D.drawImage(image, 0, 0, width, height, null);
+        graphics2D.dispose();
+        return resizedImage;
     }
 
     /**

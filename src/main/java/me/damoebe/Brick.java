@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class Brick {
     private final String element_id;
-    private final BrickColor brick_color;
+    private BrickColor brick_color;
     private final int rgb;
 
 
@@ -30,10 +30,36 @@ public class Brick {
         this.rgb = rgb;
     }
 
+    /**
+     * Limits the possibilities of color variations
+     * @param rgb original pixel color
+     * @param availableColors List of all available colors
+     */
+    public Brick(int rgb, List<BrickColor> availableColors){
+        brick_color = BrickColor.getNearestColor(rgb, availableColors);
+        element_id = getElementID(brick_color);
+        this.rgb = rgb;
+    }
+
+    /**
+     * Constructor for variation optimization
+     * @param element_id ElementID of Brick
+     * @param rgb original pixel rgb
+     */
     public Brick(String element_id, int rgb){
         this.element_id = element_id;
         this.brick_color = getBrickColor(element_id);
         this.rgb = rgb;
+    }
+
+    /**
+     * Constructor used if the elementID is already calculated.
+     * @param element_id ElementID of Brick
+     */
+    public Brick(String element_id){
+        this.element_id = element_id;
+        this.brick_color = getBrickColor(element_id);
+        this.rgb = brick_color.getColor().getRGB();
     }
 
     /**
@@ -59,6 +85,11 @@ public class Brick {
         return null;
     }
 
+    /**
+     * Generates a BrickColor Object for an elementID
+     * @param element_id elementID
+     * @return BrickColor for the elementID
+     */
     private BrickColor getBrickColor(String element_id){
         InputStream is = Thread.currentThread()
         .getContextClassLoader()
@@ -92,6 +123,10 @@ public class Brick {
 
     public BrickColor getBrick_color(){
         return brick_color;
+    }
+
+    public void setBrick_color(BrickColor brickColor){
+        this.brick_color = brickColor;
     }
 
     /**

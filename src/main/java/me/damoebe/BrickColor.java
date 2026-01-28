@@ -38,6 +38,9 @@ public class BrickColor {
     public int getId(){
         return id;
     }
+    public boolean isTransparent(){
+        return transparent;
+    }
 
     /**
      * Loads all possible BrickColors from colors.csv and elements.csv
