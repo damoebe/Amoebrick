@@ -1,4 +1,4 @@
-[![](https://jitpack.io/v/damoebe/Amoebrick.svg)](https://jitpack.io/#damoebe/Amoebrick) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/damoebe/Amoebrick)
+![](https://github.com/damoebe/Amoebrick/blob/master/Amoebrick_jitpack_badge.svg) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/damoebe/Amoebrick)
 # Amoebrick API
 Amoebrick is an API with the purpose to convert Images to an adjustable Brick-Mosaic. It is able to display the needed parts for the build and generate a preview image as well as a cost and size estimation. This is all done by utilizing a slightly modified version of the [Rebrickable Catalog Database](https://rebrickable.com/downloads/) as csv files to match colors with elements.
 The bricks used to build the mosaic all have the same part number (3005) and size (1x1), but differend element-ids. All bricks needed to build the image can be found on sites like [Bricklink](https://www.bricklink.com/v2/main.page).
