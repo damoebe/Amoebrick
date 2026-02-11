@@ -29,7 +29,7 @@ public class Main {
 
     private static void test(String name, BrickImage brickImage){
         JFrame frame = new JFrame(name);
-        frame.add(new JLabel(new ImageIcon(brickImage.getImage(10))));
+        frame.add(new JLabel(new ImageIcon(brickImage.getPreviewImage(10))));
         frame.setSize(1000, 1000);
         frame.setVisible(true);
         System.out.println(brickImage.getElementsSorted());

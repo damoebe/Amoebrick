@@ -2,6 +2,7 @@ package me.damoebe;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import me.damoebe.catalog.CatalogReader;
 
 import java.awt.*;
 import java.io.IOException;
@@ -67,20 +68,11 @@ public class Brick {
      * @return element_id
      */
     private String getElementID(BrickColor brickColor){
-        InputStream is = Thread.currentThread()
-        .getContextClassLoader()
-        .getResourceAsStream("elements.csv");
-        try (Reader reader = new InputStreamReader(is)) {
-            CSVReader csvReader = new CSVReader(reader);
-            List<String[]> lines = csvReader.readAll();
-            lines.removeFirst();
-            for (String[] line : lines){
-                if (line[2].equalsIgnoreCase(String.valueOf(brickColor.getId())) && line[1].equalsIgnoreCase("3005")){
-                    return line[0];
-                }
+        List<String[]> elementLines = CatalogReader.elements;
+        for (String[] line : elementLines){
+            if (line[2].equalsIgnoreCase(String.valueOf(brickColor.getId())) && line[1].equalsIgnoreCase("3005")){
+                return line[0];
             }
-        } catch (IOException | CsvException e) {
-            throw new RuntimeException(e);
         }
         return null;
     }
@@ -91,27 +83,18 @@ public class Brick {
      * @return BrickColor for the elementID
      */
     private BrickColor getBrickColor(String element_id){
-        InputStream is = Thread.currentThread()
-        .getContextClassLoader()
-        .getResourceAsStream("elements.csv");
-        try (Reader reader = new InputStreamReader(is)) {
-            CSVReader csvReader = new CSVReader(reader);
-            List<String[]> lines = csvReader.readAll();
-            lines.removeFirst();
-            for (String[] line : lines){
-                if (line[0].equalsIgnoreCase(element_id)){
-                    int colorId = Integer.parseInt(line[2]);
-                    for (BrickColor brickColor : BrickColor.brickColors){
-                        if (brickColor.getId() == colorId){
-                            return brickColor;
-                        }
+        List<String[]> elementLines = CatalogReader.elements;
+        for (String[] line : elementLines){
+            if (line[0].equalsIgnoreCase(element_id)){
+                int colorId = Integer.parseInt(line[2]);
+                for (BrickColor brickColor : BrickColor.brickColors){
+                    if (brickColor.getId() == colorId){
+                        return brickColor;
                     }
                 }
             }
-            return null;
-        } catch (IOException | CsvException e) {
-            throw new RuntimeException(e);
         }
+        return null;
     }
 
     /**

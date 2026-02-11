@@ -28,7 +28,7 @@ public class ExampleClass {
 
         try {
             // write file with the image (10 pixels per brick)
-            BufferedImage image = brickImage.getImage(10);
+            BufferedImage image = brickImage.getPreviewImage(10);
             outputFile.createNewFile();
             ImageIO.write(image, "png", outputFile);
         } catch (IOException e) {

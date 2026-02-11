@@ -2,6 +2,8 @@ package me.damoebe;
 
 import com.opencsv.CSVReader;
 import com.opencsv.exceptions.CsvException;
+import me.damoebe.catalog.CatalogReader;
+import me.damoebe.catalog.CatalogType;
 
 import java.awt.*;
 import java.io.IOException;
@@ -46,38 +48,21 @@ public class BrickColor {
      * Loads all possible BrickColors from colors.csv and elements.csv
      */
     public static void loadColors(){
-        InputStream is = Thread.currentThread()
-        .getContextClassLoader()
-        .getResourceAsStream("colors.csv");
-        try (Reader reader = new InputStreamReader(is)) {
-            CSVReader csvReader = new CSVReader(reader);
-            List<String[]> lines = csvReader.readAll();
-            lines.removeFirst();
-            for (String[] line : lines){
-                brickColors.add(new BrickColor(Integer.parseInt(line[0]),
-                        Boolean.getBoolean(line[3]),
-                        Color.decode("#" + line[2]).getRGB()));
+        List<String[]> colorLines = CatalogReader.colors;
+        for (String[] line : colorLines){
+            brickColors.add(new BrickColor(Integer.parseInt(line[0]),
+                    Boolean.getBoolean(line[3]),
+                    Color.decode("#" + line[2]).getRGB()));
 
-            }
-
-            // check if bricks have the colors
-            List<Integer> elementColors = new ArrayList<>();
-
-            InputStream is1 = Thread.currentThread()
-            .getContextClassLoader()
-            .getResourceAsStream("elements.csv");
-            Reader reader1 = new InputStreamReader(is1);
-            CSVReader csvReader1 = new CSVReader(reader1);
-            List<String[]> lines1 = csvReader1.readAll();
-
-            lines1.removeFirst();
-            for (String[] line : lines1){
-                elementColors.add(Integer.parseInt(line[2]));
-            }
-            brickColors.removeIf(color -> !elementColors.contains(color.id));
-        } catch (IOException | CsvException e) {
-            throw new RuntimeException(e);
         }
+        // check if bricks have the colors
+        List<Integer> elementColors = new ArrayList<>();
+        List<String[]> elementLines = CatalogReader.elements;
+
+        for (String[] line : elementLines){
+            elementColors.add(Integer.parseInt(line[2]));
+        }
+        brickColors.removeIf(color -> !elementColors.contains(color.id));
     }
 
     /**

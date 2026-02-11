@@ -1,6 +1,5 @@
 package me.damoebe;
 
-import javax.swing.*;
 import java.awt.*;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -18,6 +17,7 @@ public class BrickImage {
     private List<Brick> bricks = new ArrayList<>();
     private final int width;
     private final int height;
+    private final Image sourceImage;
 
     /**
      * Main constructor of the BrickImage class
@@ -28,6 +28,7 @@ public class BrickImage {
     public BrickImage(int width, int height, Image image){
         if (image == null) throw new RuntimeException("Image can't be null!");
 
+        this.sourceImage = image;
         this.width = width;
         this.height = height;
 
@@ -75,6 +76,7 @@ public class BrickImage {
     public BrickImage(int width, int height, Image image, Map<String, Integer> availableElements){
         if (image == null) throw new RuntimeException("Image can't be null!");
 
+        this.sourceImage = image;
         this.width = width;
         this.height = height;
 
@@ -128,7 +130,7 @@ public class BrickImage {
      * @param brickSize The exact pixel-size one brick will take in the image
      * @return A BufferedImage containing all bricks forming the result
      */
-    public BufferedImage getImage(int brickSize){
+    public BufferedImage getPreviewImage(int brickSize){
         // build brick image
         BufferedImage image = new BufferedImage(width*brickSize, height*brickSize, BufferedImage.TYPE_INT_RGB);
         Graphics2D graphics2D = image.createGraphics();
@@ -159,6 +161,14 @@ public class BrickImage {
 
         graphics2D.dispose();
         return image;
+    }
+
+    /**
+     * Getter for source image
+     * @return the original image
+     */
+    public Image getSourceImage(){
+        return sourceImage;
     }
 
     /**
@@ -209,6 +219,21 @@ public class BrickImage {
     }
 
     /**
+     * Optimizes the brick variations using optimizeVariations() until the brick variations are lower or the same as
+     * maxBrickVariations. Please keep in mind that changing to a higher value will not resolve in more optimisations.
+     * @param maxBrickVariations The maximal brick variations that should be allowed in the brickImage
+     */
+    public void setMaxBrickVariations(int maxBrickVariations){
+        if (maxBrickVariations < 1) return;
+        // lower variations
+        int minBrickAmount = 1;
+        while (this.getElementsSorted().size() <= maxBrickVariations) {
+            optimizeVariations(minBrickAmount);
+            minBrickAmount++;
+        }
+    }
+
+    /**
      * Generates a near optimized element for the variations optimisation
      * @param goodElements Elements, which have a higher amount of bricks in the Image, than the minBrickAmount (see
      *                     optimizeVariations())
@@ -244,7 +269,7 @@ public class BrickImage {
 
     /**
      * Assumes that one brick is 0.8*0.8 cm large.
-     * @return A String featuring the reallife width and height of the BrickImage. Format: {width}cm x {height}cm
+     * @return A String featuring the real-life width and height of the BrickImage. Format: {width}cm x {height}cm
      */
     public String getSizeInCM(){
         return width * 0.8 + "cm x " + height*0.8 + "cm";
