@@ -1,3 +1,5 @@
+[![Jitpack](https://github.com/damoebe/Amoebrick/blob/master/Amoebrick_jitpack_badge.svg)](https://jitpack.io/#damoebe/Amoebrick) ![GitHub code size in bytes](https://img.shields.io/github/languages/code-size/damoebe/Amoebrick)
+[![Documentation](https://img.shields.io/badge/docs-javadoc-lightblue)]([https://sulstice.gitbook.io/globalchem-your-chemical-graph-network/](https://damoebe.github.io/Amoebrick/))
 # Amoebrick API
 Amoebrick is an API with the purpose to convert Images to an adjustable Brick-Mosaic. It is able to display the needed parts for the build and generate a preview image as well as a cost and size estimation. This is all done by utilizing a slightly modified version of the [Rebrickable Catalog Database](https://rebrickable.com/downloads/) as csv files to match colors with elements.
 The bricks used to build the mosaic all have the same part number (3005) and size (1x1), but differend element-ids. All bricks needed to build the image can be found on sites like [Bricklink](https://www.bricklink.com/v2/main.page).
@@ -20,7 +22,7 @@ and this dependency:
   <version>v1.1</version>
 </dependency>
 ```
-After that you can just refresh your Maven and everything should be setup. You can download the documentation from this page to get an overview of all classes and methods. 
+After that you can just refresh your Maven and everything should be setup. In case you are using Gradle visit [this](https://jitpack.io/#damoebe/Amoebrick) page, to get the dependency and repository. If you want an overview for all classes methods and their description you can visit the [documentation page](https://damoebe.github.io/Amoebrick/).
 ## Example: Converting An Album Cover To A Brick-Mosaic
 In the following example, we will convert an album-cover-image into a BrickImage-Object and save the preview image to a .png file on the device. After that we will print all attribute related stats of the object to the console. 
 > [!TIP]
